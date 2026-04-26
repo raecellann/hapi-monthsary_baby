@@ -1,9 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-
-  const introScreen   = document.getElementById('introScreen');
+  const passwordScreen = document.getElementById('passwordScreen');
+  const passwordInput  = document.getElementById('passwordInput');
+  const passwordSubmit = document.getElementById('passwordSubmit');
+  const passwordError  = document.getElementById('passwordError');
+  const introScreen    = document.getElementById('introScreen');
   const introEnvelope = document.getElementById('introEnvelope');
   const scene         = document.getElementById('scene');
+
+  function checkPassword() {
+    const enteredPassword = passwordInput.value.trim();
+    
+    if (enteredPassword === 'ily') {
+      passwordScreen.classList.add('hidden');
+      introScreen.classList.remove('hidden-scene');
+      passwordInput.value = '';
+      passwordError.classList.remove('show');
+    } else {
+      passwordError.classList.add('show');
+      passwordInput.value = '';
+      passwordInput.focus();
+      
+      setTimeout(() => {
+        passwordError.classList.remove('show');
+      }, 3000);
+    }
+  }
+
+  passwordSubmit.addEventListener('click', checkPassword);
+  
+  passwordInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      checkPassword();
+    }
+  });
+
+  passwordInput.focus();
 
   introEnvelope.addEventListener('click', function () {
     introEnvelope.classList.add('opening');

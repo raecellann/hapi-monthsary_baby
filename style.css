@@ -36,12 +36,353 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: 200px, 100px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: multiply;
+}
+
+/* ── Windows 98–style Password Screen (themed) ─────────────── */
+.password-screen {
+  position: fixed;
+  inset: 0;
+  /* Same gradient as the card background */
+  background: hsla(0,0%,0%,1);
+  background: -webkit-linear-gradient(90deg, hsla(0,0%,0%,1) 0%, hsla(311,94%,64%,1) 100%);
+  background: linear-gradient(90deg, hsla(0,0%,0%,1) 0%, hsla(311,94%,64%,1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.password-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
   background-size: 200px;
   opacity: 0.18;
   pointer-events: none;
-  z-index: 0;
   mix-blend-mode: multiply;
+}
+
+.password-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* The window frame — pure white */
+.password-container {
+  width: clamp(290px, 88vw, 410px);
+  position: relative;
+  border: 2px solid;
+  border-color: #ffffff #555 #555 #ffffff;
+  box-shadow: 2px 2px 0 #000, inset 1px 1px 0 #fff;
+  background: #ffffff;
+}
+
+/* Title bar — ink-red→burgundy gradient */
+.win98-titlebar {
+  background: linear-gradient(to right, var(--dark-burgundy), var(--ink-red));
+  padding: 4px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.win98-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.win98-titlebar-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.win98-titlebar-text {
+  color: #ffffff;
+  font-family: 'Architects Daughter', cursive;
+  font-size: 13px;
+  font-weight: normal;
+  letter-spacing: 0.02em;
+}
+
+.win98-titlebar-buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.win98-btn-chrome {
+  width: 17px;
+  height: 15px;
+  background: #ffffff;
+  border: 1px solid;
+  border-color: #fff #808080 #808080 #fff;
+  font-size: 9px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  color: var(--text-dark);
+  line-height: 1;
+}
+
+/* Menu bar */
+.win98-menubar {
+  background: #ffffff;
+  border-bottom: 1px solid #aaa;
+  padding: 2px 4px;
+  display: flex;
+  gap: 0;
+}
+
+.win98-menu-item {
+  font-size: 12px;
+  font-family: 'Caveat', cursive;
+  padding: 2px 8px;
+  color: var(--text-dark);
+  cursor: default;
+  border: 1px solid transparent;
+}
+
+.win98-menu-item:hover {
+  background: var(--ink-red);
+  color: #fff;
+}
+
+/* Window body — pure white */
+.password-card {
+  background: #ffffff;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+  position: relative;
+}
+
+.password-card::before { display: none; }
+.password-card h2      { display: none; }
+.password-card > p     { display: none; }
+
+/* Notepad text area — white with inset border */
+.win98-textarea-mock {
+  background: #ffffff;
+  border: 2px solid;
+  border-color: #888 #ddd #ddd #888;
+  min-height: 72px;
+  margin-bottom: 10px;
+  padding: 6px 8px;
+  line-height: 1.6;
+}
+
+.win98-textarea-mock p {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+/* Separator */
+.win98-separator {
+  border: none;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #fff;
+  margin: 8px 0;
+}
+
+/* Label + input row */
+.win98-field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.win98-label {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--text-dark);
+  white-space: nowrap;
+  min-width: 72px;
+}
+
+.password-input-group {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 0;
+  margin-bottom: 0;
+}
+
+.password-input-group input {
+  flex: 1;
+  width: 100%;
+  padding: 4px 7px;
+  border: 2px solid;
+  border-color: #888 #ddd #ddd #888;
+  border-radius: 0;
+  background: #ffffff;
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  outline: none;
+  box-shadow: none;
+  transition: none;
+}
+
+.password-input-group input:focus {
+  outline: 1px dotted var(--ink-red);
+  outline-offset: -3px;
+  border-color: #888 #ddd #ddd #888;
+  box-shadow: none;
+}
+
+/* Button row */
+.win98-button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.password-input-group button,
+.win98-cancel-btn {
+  padding: 4px 16px;
+  background: #ffffff;
+  color: var(--text-dark);
+  border: 2px solid;
+  border-color: #fff #888 #888 #fff;
+  border-radius: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 1px 1px 0 #000;
+  transition: none;
+  min-width: 72px;
+  text-align: center;
+}
+
+.password-input-group button:hover,
+.win98-cancel-btn:hover {
+  background: var(--pink-light);
+  color: var(--ink-red);
+  transform: none;
+  box-shadow: 1px 1px 0 #000;
+}
+
+.password-input-group button:active,
+.win98-cancel-btn:active {
+  border-color: #888 #fff #fff #888;
+  box-shadow: none;
+  padding: 5px 15px 3px 17px;
+}
+
+/* Error message */
+.password-error {
+  font-family: 'Caveat', cursive;
+  font-size: 1rem;
+  color: var(--ink-red);
+  background: var(--pink-light);
+  border: 1px solid var(--ink-red);
+  padding: 3px 7px;
+  margin-top: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.password-error.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Status bar */
+.win98-statusbar {
+  background: #ffffff;
+  border-top: 1px solid #aaa;
+  padding: 2px 5px;
+  display: flex;
+  gap: 3px;
+}
+
+.win98-status-panel {
+  border: 1px solid;
+  border-color: #888 #ddd #ddd #888;
+  padding: 1px 6px;
+  font-family: 'Caveat', cursive;
+  font-size: 0.75rem;
+  color: var(--text-dark);
+  flex: 1;
+}
+
+/* Scrollbar mockup */
+.win98-scrollbar {
+  position: absolute;
+  right: 2px;
+  top: 52px;
+  bottom: 22px;
+  width: 15px;
+  background: #ffffff;
+  border-left: 1px solid #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.win98-scroll-arrow {
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border: 1px solid;
+  border-color: #fff #888 #888 #fff;
+  font-size: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  color: var(--text-dark);
+  flex-shrink: 0;
+}
+
+.win98-scroll-track {
+  flex: 1;
+  width: 14px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ffffff 0px, #ffffff 1px,
+    #e8e8e8 1px, #e8e8e8 3px
+  );
+}
+
+.win98-scroll-thumb {
+  width: 12px;
+  height: 22px;
+  background: #ffffff;
+  border: 1px solid;
+  border-color: #fff #888 #888 #fff;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .password-container { width: 94vw; }
+  .win98-textarea-mock p { font-size: 0.9rem; }
 }
 
 .scene {
@@ -52,6 +393,7 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .card-layout {
@@ -80,25 +422,73 @@ body::before {
     display: flex;
     flex-direction: column;
     gap: 0;
-  }
-  .envelope-wrap {
+    position: relative;
     width: 100%;
     max-width: 100%;
-    margin: 0;
+    overflow: hidden;
   }
+  .envelope-wrap {
+    order: 1;
+    grid-column: unset;
+    grid-row: unset;
+    justify-self: unset;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .envelope-wrap iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: block;
+    box-sizing: border-box;
+  }
+  /* Letter wrap is position:relative so stamp can overlay it absolutely */
   .letter-card-wrap {
+    order: 2;
     width: 100% !important;
     margin: 0 !important;
+    position: relative !important;
   }
   .letter-card {
     max-width: 100% !important;
     width: 100% !important;
     border-radius: 0 0 8px 8px;
   }
+  /* Stamp: absolutely positioned over top-right corner of letter card.
+     Music player is ~180px, so stamp sits just above/on the letter top edge */
+  .stamps-area {
+    position: absolute !important;
+    top: 162px;   /* just overlapping the letter top edge */
+    right: 10px;
+    z-index: 20;
+    display: flex !important;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0;
+    margin: 0;
+    width: auto !important;
+    pointer-events: none;
+  }
+  .stamps-area .stamp {
+    pointer-events: auto;
+    transform: rotate(3deg);
+    margin: 0;
+  }
+  .bw-photo {
+    display: none !important;
+  }
   .polaroid-and-video-row {
+    order: 3;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 12px;
     padding: 20px 10px 0 10px;
     width: 100%;
@@ -106,21 +496,22 @@ body::before {
   }
   .polaroid-wrap {
     flex-shrink: 0;
+    order: 1;
   }
   .video-wrap {
     flex-shrink: 0;
     width: clamp(70px, 35vw, 110px) !important;
     margin-top: 10px !important;
+    order: 2;
   }
   .video-wrap video {
     width: 100% !important;
   }
-  .stamps-area {
-    align-items: flex-start;
-    padding-left: 10px;
-    padding-right: 0;
-    padding-top: 0;
-    justify-content: flex-start;
+  .card-content h4 {
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+    word-wrap: break-word !important;
+    hyphens: auto !important;
   }
 }
 
